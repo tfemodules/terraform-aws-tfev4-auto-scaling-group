@@ -1,6 +1,6 @@
 variable "replicated_password" {
   type        = string
-  description = "Password to set for the replaicated console."
+  description = "Password to set for the replicated console."
 }
 
 variable "tfe_hostname" {
@@ -15,7 +15,7 @@ variable "tfe_enc_password" {
 
 variable "tfe_release_sequence" {
   type        = number
-  description = "The realese sequence corresponding to the TFE version which should be installed."
+  description = "The release sequence corresponding to the TFE version which should be installed."
 }
 
 variable "installation_assets_s3_bucket_name" {
@@ -40,8 +40,13 @@ variable "tfe_privkey_s3_path" {
 
 variable "tfe_ca_bundle" {
   type        = string
-  description = "The additionla CA certificates to add to TFE. Value needs to be a string with new line characters replaced with literal \n."
+  description = "The additional CA certificates to add to TFE. Value needs to be a string with new line characters replaced with literal \n."
   default     = ""
+}
+
+variable "tfe_pg_address" {
+  type        = string
+  description = "Address of the PostGRE data base to be used by TFE. Must contain hostname and optionally a port."
 }
 
 variable "tfe_pg_dbname" {
@@ -49,19 +54,14 @@ variable "tfe_pg_dbname" {
   description = "Name of the PostGRE data base to be used by TFE."
 }
 
-variable "tfe_pg_address" {
+variable "tfe_pg_user" {
   type        = string
-  description = "Address of the PostGRE data base to be used by TFE. Must contian hostname and optionally a port."
+  description = "Username tfe will use to access the PostGRE data base."
 }
 
 variable "tfe_pg_password" {
   type        = string
   description = "Password tfe will use to access the PostGRE data base."
-}
-
-variable "tfe_pg_user" {
-  type        = string
-  description = "Username tfe will use to access the PostGRE data base."
 }
 
 variable "tfe_s3_bucket" {

@@ -59,13 +59,13 @@ variable "name_prefix" {
 
 variable "root_block_device_size" {
   type        = number
-  description = "The size of the root block device volume in gigabytes"
+  description = "The size of the root block device volume in gigabytes."
   default     = 50
 }
 
 variable "associate_public_ip_address" {
   type        = bool
-  description = "Wether to associate public ip address with the isntance. Shold be false except if bringin a standalone instance for testing."
+  description = "Wether to associate public ip address with the instance. Should be false except if bringing a standalone instance for testing."
   default     = false
 }
 
@@ -82,6 +82,6 @@ variable "health_check_type" {
 
 variable "asg_lifecycle_hook_default_result" {
   type        = string
-  description = "Sets the default action for the Auto Scaling group inital lifecycle hook. Can be ABANDON or CONTINUE."
+  description = "Sets the default action for the Auto Scaling group initial lifecycle hook. Can be ABANDON or CONTINUE."
   default     = "ABANDON"
 }
