@@ -43,7 +43,6 @@ The available input variables for the module are described in the table below.
 | associate_public_ip_address | `bool` | `false` | Wether to associate public ip address with the instance. Should be false except if bringing a standalone instance for testing. |
 | target_groups_arns | `list(string)` | | List of target group arns in which to register the auto scaling group instances. |
 | health_check_type | `string` | `"ELB"` | Sets the healthcheck type for the auto scaling group. Accepted values ELB, EC2. |
-| asg_lifecycle_hook_default_result | `string` | `"ABANDON"` | Sets the default action for the Auto Scaling group initial lifecycle hook. Can be ABANDON or CONTINUE. |
 | replicated_password | `string` | | Password to set for the replicated console. |
 | tfe_hostname | `string` | | Hostname which will be used to access the tfe instance. |
 | tfe_enc_password | `string` | | Encryption password to be used by TFE. |
