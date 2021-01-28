@@ -32,15 +32,6 @@ data "aws_iam_policy_document" "tfe_instance" {
       "arn:aws:s3:::${var.installation_assets_s3_bucket_name}/*"
     ]
   }
-  statement {
-    sid = "AsgLifecycleHook"
-    actions = [
-      "autoscaling:CompleteLifecycleAction"
-    ]
-    resources = [
-      aws_autoscaling_group.tfe.arn
-    ]
-  }
 }
 
 resource "aws_iam_role_policy" "tfe_instance" {
