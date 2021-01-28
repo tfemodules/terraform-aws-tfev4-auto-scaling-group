@@ -1,8 +1,3 @@
-locals {
-  asg_name = "${var.name_prefix}tfe-asg"
-  asg_hook = "${var.name_prefix}tfe-lifecycle-hook"
-}
-
 resource "aws_launch_configuration" "tfe" {
   name_prefix                 = "${var.name_prefix}v${var.tfe_release_sequence}-"
   image_id                    = var.ami_id
@@ -31,10 +26,7 @@ resource "aws_launch_configuration" "tfe" {
       tfe_s3_region    = var.tfe_s3_region
       tfe_ca_bundle    = var.tfe_ca_bundle
     }))
-    install_wrapper_b64content = base64gzip(templatefile("${path.module}/templates/install_wrap.sh.tmpl", {
-      asg_hook = local.asg_hook
-      asg_name = local.asg_name
-    }))
+    install_wrapper_b64content = base64gzip(templatefile("${path.module}/templates/install_wrap.sh.tmpl", {}))
     download_assets_b64content = base64gzip(templatefile("${path.module}/templates/download_assets.sh.tmpl", {
       tfe_cert_s3_path    = var.tfe_cert_s3_path
       tfe_privkey_s3_path = var.tfe_privkey_s3_path
@@ -50,18 +42,12 @@ resource "aws_autoscaling_group" "tfe" {
   name                      = local.asg_name
   max_size                  = 1
   min_size                  = 1
-  health_check_grace_period = 300
+  health_check_grace_period = 1800
   health_check_type         = var.health_check_type
   launch_configuration      = aws_launch_configuration.tfe.name
   vpc_zone_identifier       = var.subnets_ids
   target_group_arns         = var.target_groups_arns
   wait_for_capacity_timeout = 0 # installing / starting tfe can take ~30-40 mins so no point terraform waiting for capacity.
-  initial_lifecycle_hook {
-    name                 = local.asg_hook
-    default_result       = var.asg_lifecycle_hook_default_result
-    heartbeat_timeout    = 1200
-    lifecycle_transition = "autoscaling:EC2_INSTANCE_LAUNCHING"
-  }
   dynamic "tag" {
     for_each = merge({ Name = "${var.name_prefix}instance" }, var.common_tags)
     content {

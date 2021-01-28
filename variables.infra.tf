@@ -79,9 +79,3 @@ variable "health_check_type" {
   description = "Sets the healthcheck type for the auto scaling group. Accepted values ELB, EC2."
   default     = "ELB"
 }
-
-variable "asg_lifecycle_hook_default_result" {
-  type        = string
-  description = "Sets the default action for the Auto Scaling group initial lifecycle hook. Can be ABANDON or CONTINUE."
-  default     = "ABANDON"
-}
