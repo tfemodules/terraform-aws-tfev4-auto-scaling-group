@@ -3,11 +3,6 @@ variable "replicated_password" {
   description = "Password to set for the replicated console."
 }
 
-variable "replicated_settings" {
-  type        = object(any)
-  description = "The settings provided in the replicated.conf file as defined on  ."
-}
-
 variable "tfe_hostname" {
   type        = string
   description = "Hostname which will be used to access the tfe instance."
