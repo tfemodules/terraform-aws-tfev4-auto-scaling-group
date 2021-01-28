@@ -39,7 +39,7 @@ resource "aws_launch_configuration" "tfe" {
 }
 
 resource "aws_autoscaling_group" "tfe" {
-  name                      = local.asg_name
+  name                      = "${var.name_prefix}tfe-asg"
   max_size                  = 1
   min_size                  = 1
   health_check_grace_period = 1800
