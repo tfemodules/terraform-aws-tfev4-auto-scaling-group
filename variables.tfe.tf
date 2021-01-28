@@ -3,6 +3,11 @@ variable "replicated_password" {
   description = "Password to set for the replicated console."
 }
 
+variable "replicated_settings" {
+  type        = object(any)
+  description = "The settings provided in the replicated.conf file as defined on  ."
+}
+
 variable "tfe_hostname" {
   type        = string
   description = "Hostname which will be used to access the tfe instance."
@@ -26,6 +31,11 @@ variable "installation_assets_s3_bucket_name" {
 variable "tfe_license_s3_path" {
   type        = string
   description = "S3 Path to the TFE license .rli file."
+}
+
+variable "tfe_settings" {
+  type        = map(string)
+  description = "Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings ."
 }
 
 variable "tfe_cert_s3_path" {
