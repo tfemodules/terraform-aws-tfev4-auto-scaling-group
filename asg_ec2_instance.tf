@@ -1,5 +1,9 @@
+locals {
+  tfe_settings = { for k, v in var.tfe_settings : k => { "value" = v } }
+}
+
 resource "aws_launch_configuration" "tfe" {
-  name_prefix                 = "${var.name_prefix}v${var.tfe_release_sequence}-"
+  name_prefix                 = "${var.name_prefix}v${var.replicated_tfe_release_sequence}-"
   image_id                    = var.ami_id
   instance_type               = var.instance_type
   iam_instance_profile        = aws_iam_instance_profile.tfe_instance.name
@@ -11,21 +15,11 @@ resource "aws_launch_configuration" "tfe" {
   }
   user_data_base64 = base64encode(templatefile("${path.module}/templates/cloud-init.tmpl", {
     replicated_conf_b64content = base64gzip(templatefile("${path.module}/templates/replicated.conf.tmpl", {
-      tfe_hostname         = var.tfe_hostname
+      tfe_hostname         = var.replicated_tls_bootstrap_hostname
       replicated_password  = var.replicated_password
-      tfe_release_sequence = var.tfe_release_sequence
+      tfe_release_sequence = var.replicated_tfe_release_sequence
     }))
-    tfe_settings_b64content = base64gzip(templatefile("${path.module}/templates/settings.json.tmpl", {
-      tfe_enc_password = var.tfe_enc_password
-      tfe_hostname     = var.tfe_hostname
-      tfe_pg_dbname    = var.tfe_pg_dbname
-      tfe_pg_address   = var.tfe_pg_address
-      tfe_pg_password  = var.tfe_pg_password
-      tfe_pg_user      = var.tfe_pg_user
-      tfe_s3_bucket    = var.tfe_s3_bucket
-      tfe_s3_region    = var.tfe_s3_region
-      tfe_ca_bundle    = var.tfe_ca_bundle
-    }))
+    tfe_settings_b64content    = base64gzip(jsonencode(local.tfe_settings))
     install_wrapper_b64content = base64gzip(templatefile("${path.module}/templates/install_wrap.sh.tmpl", {}))
     download_assets_b64content = base64gzip(templatefile("${path.module}/templates/download_assets.sh.tmpl", {
       tfe_cert_s3_path    = var.tfe_cert_s3_path

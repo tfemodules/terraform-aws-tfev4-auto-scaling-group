@@ -44,20 +44,40 @@ The available input variables for the module are described in the table below.
 | target_groups_arns | `list(string)` | | List of target group arns in which to register the auto scaling group instances. |
 | health_check_type | `string` | `"ELB"` | Sets the healthcheck type for the auto scaling group. Accepted values ELB, EC2. |
 | replicated_password | `string` | | Password to set for the replicated console. |
-| tfe_hostname | `string` | | Hostname which will be used to access the tfe instance. |
-| tfe_enc_password | `string` | | Encryption password to be used by TFE. |
-| tfe_release_sequence | `number` | | The release sequence corresponding to the TFE version which should be installed. |
+| replicated_tls_bootstrap_hostname | `string` | | Hostname which will be used to access the tfe instance. |
+| replicated_tfe_release_sequence | `number` | | The release sequence corresponding to the TFE version which should be installed. |
+| tfe_settings | `map(string)` | | Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings . The user is responsible to provide all required values that make sense for the type of installation. |
 | installation_assets_s3_bucket_name | `string` | | The name of the S3 bucket containing the installation assets - ssl certificate, ssl certificate key and tfe license. |
 | tfe_license_s3_path | `string` | | S3 Path to the TFE license .rli file. |
 | tfe_cert_s3_path | `string` | | S3 Path to the file containing the certificate chain which should be presented by the TFE. |
 | tfe_privkey_s3_path | `string` | | S3 Path to the file containing the private key for the certificate which should be presented by the TFE. |
-| tfe_ca_bundle | `string` | "``" | The additional CA certificates to add to TFE. Value needs to be a string with new line characters replaced with literal \n. |
-| tfe_pg_address | `string` | | Address of the PostGRE data base to be used by TFE. Must contain hostname and optionally a port. |
-| tfe_pg_dbname | `string` | | Name of the PostGRE data base to be used by TFE. |
-| tfe_pg_user | `string` | | Username tfe will use to access the PostGRE data base. |
-| tfe_pg_password | `string` | | Password tfe will use to access the PostGRE data base. |
-| tfe_s3_bucket | `string` | | Name of the S3 bucket tfe will use for object storage. |
-| tfe_s3_region | `string` | | AWS region of the S3 bucket tfe will use for object storage. |
+
+### Example `tfe_settings` values
+
+These are some examples of the `tfe_settings` value that would make sense in an AWS installation.
+
+**Note:** The value of the `tfe_hostname` input variable is used to set the `TlsBootstrapHostname` parameter in the `replicated.conf` file and not the `hostname` in the `tfe-settings.json` file. That said both values should be the same in most scenarios.
+
+* External services mode - most common and recommended
+
+  ```hcl
+  {
+    installation_type    = "production",
+    production_type      = "external",
+    enc_password         = "very_secret_password",
+    hostname             = "tfe.domain.com",
+    ca_certs             = "ca_certs_string",
+    pg_user              = "postgre_username",
+    pg_password          = "postgre_password",
+    pg_dbname            = "postgre_data_base",
+    pg_netloc            = "postgre_address",
+    pg_extra_params      = "sslmode=require",
+    placement            = "placement_s3",
+    aws_instance_profile = "1",
+    s3_bucket            = "s3_bucket_name",
+    s3_region            = "s3_bucket_region",
+  }
+  ```
 
 ## Outputs
 

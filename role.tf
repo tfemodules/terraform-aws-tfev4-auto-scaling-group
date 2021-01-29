@@ -1,3 +1,7 @@
+locals {
+  access_s3_storage_via_instance_profile = lookup(var.tfe_settings, "aws_instance_profile", "0") == "1"
+}
+
 resource "aws_iam_role" "tfe_instance" {
   name = "${var.name_prefix}tfe-instance"
 
@@ -26,11 +30,11 @@ data "aws_iam_policy_document" "tfe_instance" {
     actions = [
       "s3:*"
     ]
-    resources = [
-      "arn:aws:s3:::${var.tfe_s3_bucket}",
-      "arn:aws:s3:::${var.tfe_s3_bucket}/*",
+    resources = compact([
+      local.access_s3_storage_via_instance_profile ? "arn:aws:s3:::${var.tfe_settings["s3_bucket"]}" : "",
+      local.access_s3_storage_via_instance_profile ? "arn:aws:s3:::${var.tfe_settings["s3_bucket"]}/*" : "",
       "arn:aws:s3:::${var.installation_assets_s3_bucket_name}/*"
-    ]
+    ])
   }
 }
 
