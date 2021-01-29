@@ -3,12 +3,12 @@ variable "replicated_password" {
   description = "Password to set for the replicated console."
 }
 
-variable "tfe_hostname" {
+variable "replicated_tls_bootstrap_hostname" {
   type        = string
   description = "Hostname which will be used to access the tfe instance."
 }
 
-variable "tfe_release_sequence" {
+variable "replicated_tfe_release_sequence" {
   type        = number
   description = "The release sequence corresponding to the TFE version which should be installed."
 }
