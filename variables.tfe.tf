@@ -15,7 +15,7 @@ variable "tfe_release_sequence" {
 
 variable "tfe_settings" {
   type        = map(string)
-  description = "Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings ."
+  description = "Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings . The user is responsible to provide all required values that make sense for the type of installation."
 }
 
 variable "installation_assets_s3_bucket_name" {

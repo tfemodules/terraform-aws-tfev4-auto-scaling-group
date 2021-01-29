@@ -45,6 +45,6 @@ resource "aws_iam_role_policy" "tfe_instance" {
 }
 
 resource "aws_iam_instance_profile" "tfe_instance" {
-  name  = "${var.name_prefix}tfe-instance"
-  role  = aws_iam_role.tfe_instance.name
+  name = "${var.name_prefix}tfe-instance"
+  role = aws_iam_role.tfe_instance.name
 }
