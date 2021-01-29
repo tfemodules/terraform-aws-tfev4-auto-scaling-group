@@ -27,8 +27,8 @@ data "aws_iam_policy_document" "tfe_instance" {
       "s3:*"
     ]
     resources = [
-      "arn:aws:s3:::${var.tfe_s3_bucket}",
-      "arn:aws:s3:::${var.tfe_s3_bucket}/*",
+      "arn:aws:s3:::${var.tfe_settings["s3_bucket"]}",
+      "arn:aws:s3:::${var.tfe_settings["s3_bucket"]}/*",
       "arn:aws:s3:::${var.installation_assets_s3_bucket_name}/*"
     ]
   }

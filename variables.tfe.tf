@@ -8,14 +8,14 @@ variable "tfe_hostname" {
   description = "Hostname which will be used to access the tfe instance."
 }
 
-variable "tfe_enc_password" {
-  type        = string
-  description = "Encryption password to be used by TFE."
-}
-
 variable "tfe_release_sequence" {
   type        = number
   description = "The release sequence corresponding to the TFE version which should be installed."
+}
+
+variable "tfe_settings" {
+  type        = map(string)
+  description = "Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings ."
 }
 
 variable "installation_assets_s3_bucket_name" {
@@ -28,11 +28,6 @@ variable "tfe_license_s3_path" {
   description = "S3 Path to the TFE license .rli file."
 }
 
-variable "tfe_settings" {
-  type        = map(string)
-  description = "Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings ."
-}
-
 variable "tfe_cert_s3_path" {
   type        = string
   description = "S3 Path to the file containing the certificate chain which should be presented by the TFE."
@@ -41,40 +36,4 @@ variable "tfe_cert_s3_path" {
 variable "tfe_privkey_s3_path" {
   type        = string
   description = "S3 Path to the file containing the private key for the certificate which should be presented by the TFE."
-}
-
-variable "tfe_ca_bundle" {
-  type        = string
-  description = "The additional CA certificates to add to TFE. Value needs to be a string with new line characters replaced with literal \n."
-  default     = ""
-}
-
-variable "tfe_pg_address" {
-  type        = string
-  description = "Address of the PostGRE data base to be used by TFE. Must contain hostname and optionally a port."
-}
-
-variable "tfe_pg_dbname" {
-  type        = string
-  description = "Name of the PostGRE data base to be used by TFE."
-}
-
-variable "tfe_pg_user" {
-  type        = string
-  description = "Username tfe will use to access the PostGRE data base."
-}
-
-variable "tfe_pg_password" {
-  type        = string
-  description = "Password tfe will use to access the PostGRE data base."
-}
-
-variable "tfe_s3_bucket" {
-  type        = string
-  description = "Name of the S3 bucket tfe will use for object storage."
-}
-
-variable "tfe_s3_region" {
-  type        = string
-  description = "AWS region of the S3 bucket tfe will use for object storage."
 }
