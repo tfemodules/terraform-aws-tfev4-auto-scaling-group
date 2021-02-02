@@ -67,6 +67,24 @@ resource "aws_security_group_rule" "sg_local_2" {
   security_group_id        = aws_security_group.tfe_instance.id
 }
 
+resource "aws_security_group_rule" "sg_local_vault" {
+  type                     = "ingress"
+  from_port                = 8201
+  to_port                  = 8201
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.tfe_instance.id
+  security_group_id        = aws_security_group.tfe_instance.id
+}
+
+resource "aws_security_group_rule" "sg_local_tfe_admin" {
+  type                     = "ingress"
+  from_port                = 32846
+  to_port                  = 32846
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.tfe_instance.id
+  security_group_id        = aws_security_group.tfe_instance.id
+}
+
 resource "aws_security_group_rule" "allow_all_outbound" {
   type              = "egress"
   from_port         = 0
