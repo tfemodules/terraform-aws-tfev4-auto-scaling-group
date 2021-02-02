@@ -34,9 +34,9 @@ resource "aws_launch_configuration" "tfe" {
 
 resource "aws_autoscaling_group" "tfe" {
   name                      = "${var.name_prefix}tfe-asg"
-  max_size                  = 1
-  min_size                  = 1
-  health_check_grace_period = 1800
+  max_size                  = var.max_size
+  min_size                  = var.min_size
+  health_check_grace_period = var.health_check_grace_period
   health_check_type         = var.health_check_type
   launch_configuration      = aws_launch_configuration.tfe.name
   vpc_zone_identifier       = var.subnets_ids

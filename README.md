@@ -43,6 +43,11 @@ The available input variables for the module are described in the table below.
 | associate_public_ip_address | `bool` | `false` | Wether to associate public ip address with the instance. Should be false except if bringing a standalone instance for testing. |
 | target_groups_arns | `list(string)` | | List of target group arns in which to register the auto scaling group instances. |
 | health_check_type | `string` | `"ELB"` | Sets the healthcheck type for the auto scaling group. Accepted values ELB, EC2. |
+
+| health_check_grace_period | `number` | `1800` | Time after instance comes into service before checking health. Needs to be long enough for TFE to be installed and started if using HTTP healthcheck e.g. via `health_check_type` ELB. |
+| max_size | `max_size` | `1` | The maximum size of the Auto Scaling Group. Must be set to 1 if not using Active-Active TFE installation. |
+| root_block_device_size | `min_size` | `1` | The minimum size of the Auto Scaling Group. Must be set to 1 if not using Active-Active TFE installation. |
+
 | replicated_password | `string` | | Password to set for the replicated console. |
 | replicated_tls_bootstrap_hostname | `string` | | Hostname which will be used to access the tfe instance. |
 | replicated_tfe_release_sequence | `number` | | The release sequence corresponding to the TFE version which should be installed. |

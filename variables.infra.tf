@@ -79,3 +79,21 @@ variable "health_check_type" {
   description = "Sets the healthcheck type for the auto scaling group. Accepted values ELB, EC2."
   default     = "ELB"
 }
+
+variable "health_check_grace_period" {
+  type        = number
+  description = "Time after instance comes into service before checking health. Needs to be long enough for TFE to be installed and started if using HTTP healthcheck e.g. via `health_check_type` ELB."
+  default     = 1800
+}
+
+variable "max_size" {
+  type        = number
+  description = "The maximum size of the Auto Scaling Group. Must be set to 1 if not using Active-Active TFE installation."
+  default     = 1
+}
+
+variable "min_size" {
+  type        = number
+  description = "The minimum size of the Auto Scaling Group. Must be set to 1 if not using Active-Active TFE installation."
+  default     = 1
+}
