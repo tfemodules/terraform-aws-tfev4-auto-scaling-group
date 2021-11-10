@@ -4,4 +4,4 @@ private_ip=$(curl -sSf 'http://169.254.169.254/latest/meta-data/local-ipv4')
 public_ip=$(curl -sSf 'http://169.254.169.254/latest/meta-data/public-ipv4')
 [ -z "$public_ip" ] && public_ip="$private_ip"
 curl -sS -o /tmp/install.sh https://install.terraform.io/ptfe/stable
-bash /tmp/install.sh no-proxy private-address="$private_ip" public-address="$public_ip"
+bash /tmp/install.sh ${replicated_install_args} private-address="$private_ip" public-address="$public_ip"

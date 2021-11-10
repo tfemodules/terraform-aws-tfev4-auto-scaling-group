@@ -19,8 +19,10 @@ resource "aws_launch_configuration" "tfe" {
       replicated_password  = var.replicated_password
       tfe_release_sequence = var.replicated_tfe_release_sequence
     }))
-    tfe_settings_b64content    = base64gzip(jsonencode(local.tfe_settings))
-    install_wrapper_b64content = base64gzip(templatefile("${path.module}/templates/install_wrap.sh.tmpl", {}))
+    tfe_settings_b64content = base64gzip(jsonencode(local.tfe_settings))
+    install_wrapper_b64content = base64gzip(templatefile("${path.module}/templates/install_wrap.sh.tmpl", {
+      replicated_install_args = join(" ", var.replicated_install_args)
+    }))
     download_assets_b64content = base64gzip(templatefile("${path.module}/templates/download_assets.sh.tmpl", {
       tfe_cert_s3_path    = var.tfe_cert_s3_path
       tfe_privkey_s3_path = var.tfe_privkey_s3_path

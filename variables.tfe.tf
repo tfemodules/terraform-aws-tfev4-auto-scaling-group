@@ -13,6 +13,12 @@ variable "replicated_tfe_release_sequence" {
   description = "The release sequence corresponding to the TFE version which should be installed."
 }
 
+variable "replicated_install_args" {
+  type        = list(string)
+  description = "Replicated installer script arguments as defined on https://help.replicated.com/docs/native/customer-installations/installing-via-script/#flags . Must not contain the `private-address` and `public-address` flags."
+  default     = ["no-proxy"]
+}
+
 variable "tfe_settings" {
   type        = map(string)
   description = "Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings . The user is responsible to provide all required values that make sense for the type of installation."
