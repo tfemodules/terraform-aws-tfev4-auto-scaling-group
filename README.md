@@ -89,3 +89,4 @@ The outputs defined for the module are described in the table below.
 | Output | Type | Description |
 | -------- | ---- | ----------- |
 | tfe_asg_name | `string` | The name of the TFE Auto Scaling group. |
+| tfe_security_group_id | `string` | The Id of the AWS security group assigned to the TFE EC2 instances. |
