@@ -49,6 +49,7 @@ The available input variables for the module are described in the table below.
 | replicated_password | `string` | | Password to set for the replicated console. |
 | replicated_tls_bootstrap_hostname | `string` | | Hostname which will be used to access the tfe instance. |
 | replicated_tfe_release_sequence | `number` | | The release sequence corresponding to the TFE version which should be installed. |
+| replicated_install_args | `list(string)` | `["no-proxy"]` | Replicated installer script arguments as defined on https://help.replicated.com/docs/native/customer-installations/installing-via-script/#flags . Must not contain the `private-address` and `public-address` flags.
 | tfe_settings | `map(string)` | | Key/Value pairs to generate the TFE settings file as described on https://www.terraform.io/docs/enterprise/install/automating-the-installer.html#available-settings . The user is responsible to provide all required values that make sense for the type of installation. |
 | installation_assets_s3_bucket_name | `string` | | The name of the S3 bucket containing the installation assets - ssl certificate, ssl certificate key and tfe license. |
 | tfe_license_s3_path | `string` | | S3 Path to the TFE license .rli file. |
